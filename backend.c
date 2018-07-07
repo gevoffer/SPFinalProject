@@ -97,6 +97,31 @@ void destroy_board(gameBoard* board){
 	free(board);
 }
 
+moveListNode* create_node(moveListNode* prevNode, moveListNode* nextNode, int prevValue, int setValue, int row, int col){
+	moveListNode* node = (moveListNode*)malloc(sizeof(moveListNode*));
+	if(node == NULL){
+		return NULL;
+	}
+	node->prevMove = prevNode;
+	node->nextMove = nextNode;
+	node->prevValue = prevValue;
+	node->setValue = setValue;
+	node->row = row;
+	node->col = col;
+	return node;
+}
+
+Game* create_game(){
+	Game* game = (Game*)malloc(sizeof(Game*));
+	if(game == NULL){
+		return NULL;
+	}
+	game->board = create_board();
+	game->mode = INIT;
+	game->markErrors = false;
+	game->lastMove = create_node(NULL, NULL, -1, -1, -1 ,-1);
+	return game;
+}
 
 void printSepRow() {
 	int i;

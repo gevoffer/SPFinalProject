@@ -61,19 +61,19 @@ typedef struct board{
 	gameCell*** boardCells;
 } gameBoard;
 
-typedef struct movenode{
-	//moveNode* nextMove;
-	//moveNode* prevMove;
+typedef struct moveListNode{
+	struct moveListNode *nextMove;
+	struct moveListNode *prevMove;
 	int row;
 	int col;
 	int prevValue;
 	int setValue;
-} moveNode;
+}moveListNode;
 
 typedef struct game{
 	gameBoard* board;
 	MODE mode;
-	moveNode* lastMove;
+	moveListNode* lastMove;
 	bool markErrors;
 } Game;
 
