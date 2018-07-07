@@ -5,4 +5,93 @@
  *      Author: Gev Offer
  */
 
+#include "backend.h"
+
+gameCell* create_cell() {
+	gameCell* cell = (gameCell*) malloc(sizeof(gameCell));
+	if(cell == NULL) {
+		free(cell);
+		return NULL;
+	}
+	cell->value = 0;
+	cell->row = -1;
+	cell->col = -1;
+	cell->fixed = false;
+	cell->erroneous = false;
+	return cell;
+}
+
+gameCell* copy_cell(gameCell* cell){
+	gameCell* new_cell = create_cell();
+
+	new_cell->value = cell->value;
+	new_cell->row = cell->row;
+	new_cell->col = cell->col;
+	new_cell->fixed = cell->fixed;
+	new_cell->erroneous = cell->erroneous;
+
+	return new_cell;
+}
+
+void destroy_cell(gameCell* cell) {
+	if(cell == NULL){
+		return;
+	}
+	free(cell);
+}
+
+gameBoard* create_board() {
+	int i;
+	int j;
+
+	gameBoard* board = (gameBoard*)malloc(sizeof(gameBoard));
+	if(board == NULL){
+		free(board->boardCells);
+		free(board);
+		return NULL;
+	}
+
+	for(i = 0; i < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; i++){
+		for(j = 0; j < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; j++){
+			board->boardCells[i][j] = create_cell();
+			board->boardCells[i][j]->row = i;
+			board->boardCells[i][j]->col = j;
+		}
+	}
+
+	return board;
+}
+
+gameBoard* copy_board(gameBoard* board){
+	int i;
+	int j;
+
+	gameBoard* new_board = create_board();
+	for(i = 0; i < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; i++){
+		for(j = 0; j < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; j++){
+			new_board->boardCells[i][j] = copy_cell(board->boardCells[i][j]);
+		}
+	}
+
+	return new_board;
+}
+
+void destroy_board(gameBoard* board){
+	int i;
+	int j;
+
+	if(board == NULL){
+		return;
+	}
+
+	for(i = 0; i < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; i++){
+		for(j = 0; j < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; j++){
+			destroy_cell(board->boardCells[i][j]);
+		}
+	}
+
+	free(board->boardCells);
+	free(board);
+}
+
 

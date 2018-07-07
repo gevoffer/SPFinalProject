@@ -60,8 +60,6 @@ typedef struct board{
 	gameCell* boardCells[BLOCK_ROW_SIZE * BLOCK_COL_SIZE][BLOCK_ROW_SIZE * BLOCK_COL_SIZE];
 } gameBoard;
 
-
-
 typedef struct movenode{
 	moveNode* nextMove;
 	moveNode* prevMove;
@@ -83,5 +81,16 @@ typedef struct command{
 	int vars[3];
 } command;
 
+gameCell* create_cell();
+
+gameCell* copy_cell(gameCell* cell);
+
+void destroy_cell(gameCell* cell);
+
+gameBoard* create_board();
+
+gameBoard* copy_board(gameBoard* board);
+
+void destroy_board(gameBoard* board);
 
 #endif /* BACKEND_H_ */
