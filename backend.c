@@ -167,11 +167,13 @@ void printSepRow() {
 
 void printRow(int rowNum, gameBoard* board, Game* game) {
 	int i;
+	gameCell* tmpCell;
 	for (i = 0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++){
 		if (i%BLOCK_COL_SIZE==0) {
 			printf("|");
 		}
-		printCell(board->boardCells[i][rowNum], game);
+		tmpCell = board->boardCells[i][rowNum];
+		printCell(tmpCell, game);
 	}
 	printf("|\n");
 }
