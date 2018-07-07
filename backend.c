@@ -51,7 +51,9 @@ gameBoard* create_board() {
 		return NULL;
 	}
 
+	board->boardCells = calloc(BLOCK_ROW_SIZE * BLOCK_COL_SIZE, sizeof(gameCell**));
 	for(i = 0; i < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; i++){
+		board->boardCells[i] = calloc(BLOCK_ROW_SIZE * BLOCK_COL_SIZE, sizeof(gameCell*));
 		for(j = 0; j < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; j++){
 			board->boardCells[i][j] = create_cell();
 			board->boardCells[i][j]->row = i;
@@ -88,6 +90,7 @@ void destroy_board(gameBoard* board){
 		for(j = 0; j < BLOCK_ROW_SIZE * BLOCK_COL_SIZE; j++){
 			destroy_cell(board->boardCells[i][j]);
 		}
+		free(board->boardCells[i]);
 	}
 
 	free(board->boardCells);
