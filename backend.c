@@ -160,40 +160,45 @@ void destroy_game(Game* game){
 
 void printSepRow() {
 	int i;
-	for (i=0 ; i < 4*BLOCK_ROW_SIZE*BLOCK_COL_SIZE*BLOCK_COL_SIZE+1 ; i++ ) {
+	for (i=0 ; i < 4*BLOCK_ROW_SIZE*BLOCK_COL_SIZE+BLOCK_COL_SIZE+1 ; i++ ) {
 		printf("-");
 	}
 	printf("\n");
 }
 
-void printRow(int rowNum, gameBoard* board, Game* game) {
+//void printRow(int rowNum, Game* game) {
+void printRow(int rowNum, gameBoard* board) {
 	int i;
 	gameCell* tmpCell;
 	for (i = 0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++){
 		if (i%BLOCK_COL_SIZE==0) {
 			printf("|");
 		}
+//		tmpCell = game->board->boardCells[i][rowNum];
 		tmpCell = board->boardCells[i][rowNum];
-		printCell(tmpCell, game);
+		printCell(tmpCell, board);
 	}
 	printf("|\n");
 }
 
-void printCell(gameCell* cell, Game* game) {
+//void printCell(gameCell* cell, Game* game) {
+void printCell(gameCell* cell, gameBoard* board) {
 	if (cell->value != 0) {printf (" %2d",cell->value);}
 	else {printf("   ");}
 	if (cell->fixed) {printf(".");}
-	else if ((cell->erroneous) || game->markErrors ){printf("*");}
+//	else if ((cell->erroneous) || game->markErrors ){printf("*");}
+	else if (cell->erroneous){printf("*");}
 	else {printf(" ");}
 }
 
-void printBoard(gameBoard* board, Game* game) {
+//void printBoard(Game* game) {
+void printBoard(gameBoard* board) {
 	int i;
 	for (i=0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++) {
 		if (i%BLOCK_COL_SIZE==0) {
 			printSepRow();
 		}
-		printRow(i, board, game);
+		printRow(i, board);
 	}
 	printSepRow();
 }
