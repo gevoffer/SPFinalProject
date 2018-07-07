@@ -44,6 +44,8 @@ typedef enum{
 
 typedef struct cell{
 	int value;
+	int row;
+	int col;
 	bool fixed;
 	bool erroneous;
 } gameCell;
@@ -58,11 +60,7 @@ typedef struct board{
 	gameCell* boardCells[BLOCK_ROW_SIZE * BLOCK_COL_SIZE][BLOCK_ROW_SIZE * BLOCK_COL_SIZE];
 } gameBoard;
 
-typedef struct game{
-	gameBoard* board;
-	MODE mode;
-	moveNode* lastMove;
-};
+
 
 typedef struct movenode{
 	moveNode* nextMove;
@@ -72,6 +70,13 @@ typedef struct movenode{
 	int prevValue;
 	int setValue;
 } moveNode;
+
+typedef struct game{
+	gameBoard* board;
+	MODE mode;
+	moveNode* lastMove;
+	bool markErrors;
+} Game;
 
 typedef struct command{
 	GAME_COMMAND cmd;
