@@ -120,22 +120,23 @@ void destroy_moveList_forwards(moveListNode* node){
 	if(node->nextMove != NULL){
 		destroy_moveList_forwards(node->nextMove);
 	}
-	prev = node->prevMove;
+	//prev = node->prevMove;
 	free(node);
-	prev->nextMove=NULL;
+	//prev->nextMove=NULL;
 }
 
 void destroy_moveList_backwards(moveListNode* node){
 	moveListNode* prev;
-	if (node->nextMove !=NULL){
+	if (node->nextMove != NULL){
 		destroy_moveList_forwards(node->nextMove);
 	}
 	if(node->prevMove == NULL){
+		free(node);
 		return;
 	}
 	prev = node->prevMove;
 	free(node);
-	prev->nextMove=NULL;
+	//prev->nextMove=NULL;
 	destroy_moveList_backwards(prev);
 }
 
