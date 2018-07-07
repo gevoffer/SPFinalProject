@@ -95,3 +95,40 @@ void destroy_board(gameBoard* board){
 }
 
 
+void printSepRow() {
+	int i;
+	for (i=0 ; i < 4*BLOCK_ROW_SIZE*BLOCK_COL_SIZE*BLOCK_COL_SIZE+1 ; i++ ) {
+		printf("-");
+	}
+	printf("\n");
+}
+
+void printRow(int rowNum, gameBoard* board, Game* game) {
+	int i;
+	for (i = 0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++){
+		if (i%BLOCK_COL_SIZE==0) {
+			printf("|");
+		}
+		printCell(board->boardCells[i][rowNum], game);
+	}
+	printf("|\n");
+}
+
+void printCell(gameCell* cell, Game* game) {
+	if (cell->value != 0) {printf (" %2d",cell->value);}
+	else {printf("   ");}
+	if (cell->fixed) {printf(".");}
+	else if ((cell->erroneous) || game->markErrors ){printf("*");}
+	else {printf(" ");}
+}
+
+void printBoard(gameBoard* board, Game* game) {
+	int i;
+	for (i=0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++) {
+		if (i%BLOCK_COL_SIZE==0) {
+			printSepRow();
+		}
+		printRow(i, board, game);
+	}
+	printSepRow();
+}
