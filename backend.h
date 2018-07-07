@@ -94,12 +94,22 @@ gameBoard* copy_board(gameBoard* board);
 
 void destroy_board(gameBoard* board);
 
+moveListNode* create_node(moveListNode* prevNode, moveListNode* nextNode, int prevValue, int setValue, int row, int col);
+
+Game* create_game();
+
 void printSepRow();
 
-void printRow(int rowNum, gameBoard* board, Game* game);
+//void printRow(int rowNum, Game* game);
+//
+//void printCell(gameCell* cell, Game* game);
+//
+//void printBoard(Game* game);
 
-void printCell(gameCell* cell, Game* game);
+void printRow(int rowNum, gameBoard* board);
 
-void printBoard(gameBoard* board, Game* game);
+void printCell(gameCell* cell, gameBoard* board);
+
+void printBoard(gameBoard* board);
 
 #endif /* BACKEND_H_ */

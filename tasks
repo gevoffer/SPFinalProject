@@ -1,9 +1,11 @@
-1. לכתוב פקודות אלוקציה ושחרור 
-2. הדפסת לוח
-3. מציאת בלוק, שורה, עמודה
-4. כל הפקודות שהן לא חכמות (solve, validate, ganarate) ולא עבודה עם קבצים, כולל parsing של המשתמש
-5. פקודות solve, validate, generate- אחת אחרי השניה + בדיקות אחרי כל אחת
-6. עבודה עם קבצים
+1. find block, row and column
+2. parcing user input
+3. all commands that are not smart commands (solve, validate, generate)
+4. smart commands
+5. working with files
+
+TODO:
+1. list allocation and deletion -> undo commands in the end
 
 
 חלוקת קבצים:
