@@ -111,6 +111,34 @@ moveListNode* create_node(moveListNode* prevNode, moveListNode* nextNode, int pr
 	return node;
 }
 
+/*
+ * destroys nodes from the current one and on. make sure to provide as input
+ * the node following the one you're at
+ */
+void destroy_moveList_forwards(moveListNode* node){
+	moveListNode* prev;
+	if(node->nextMove != NULL){
+		destroy_moveList_forwards(node->nextMove);
+	}
+	prev = node->prevMove;
+	free(node);
+	prev->nextMove=NULL;
+}
+
+void destroy_moveList_backwards(moveListNode* node){
+	moveListNode* prev;
+	if (node->nextMove !=NULL){
+		destroy_moveList_forwards(node->nextMove);
+	}
+	if(node->prevMove == NULL){
+		return;
+	}
+	prev = node->prevMove;
+	free(node);
+	prev->nextMove=NULL;
+	destroy_moveList_backwards(prev);
+}
+
 Game* create_game(){
 	Game* game = (Game*)malloc(sizeof(Game*));
 	if(game == NULL){
@@ -121,6 +149,12 @@ Game* create_game(){
 	game->markErrors = false;
 	game->lastMove = create_node(NULL, NULL, -1, -1, -1 ,-1);
 	return game;
+}
+
+void destroy_game(Game* game){
+	destroy_board(game->board);
+	destroy_moveList_backwards(game->lastMove);
+	free(game);
 }
 
 void printSepRow() {
