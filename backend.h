@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <malloc.h>
 
 #define BLOCK_ROW_SIZE 3
 #define BLOCK_COL_SIZE 3
@@ -57,12 +58,12 @@ typedef struct block{
 } gameBlock;
 
 typedef struct board{
-	gameCell* boardCells[BLOCK_ROW_SIZE * BLOCK_COL_SIZE][BLOCK_ROW_SIZE * BLOCK_COL_SIZE];
+	gameCell*** boardCells;
 } gameBoard;
 
 typedef struct movenode{
-	moveNode* nextMove;
-	moveNode* prevMove;
+	//moveNode* nextMove;
+	//moveNode* prevMove;
 	int row;
 	int col;
 	int prevValue;
@@ -94,37 +95,3 @@ gameBoard* copy_board(gameBoard* board);
 void destroy_board(gameBoard* board);
 
 #endif /* BACKEND_H_ */
-
-
-/*
- * prints a separating row. isLastRow is an indicator for if that row is the last row.
- * if it is- don't print another "\n" in the end/
- */
-void printSepRow(int isLastRow) {
-	int i;
-	for (i=0 ; i < 4*BLOCK_ROW_SIZE*BLOCK_COL_SIZE*BLOCK_COL_SIZE+1 ; i++ ) {
-		printf("-");
-	}
-	if (isLastRow==0){
-		printf("\n");
-	}
-}
-
-void printRow(int rowNum, gameBoard board) {
-	int i;
-	for (i = 0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++){
-		if (i%BLOCK_COL_SIZE==0) {
-			printf("|");
-		}
-		printcell(board->boardCells[i][rowNum]);
-	}
-	printf("|\n");
-}
-
-void printCell(gameCell cell) {
-	if (cell->value != 0) {printf (" %2d",cell->value);}
-	else {printf("   ");}
-	if (cell->fixed) {printf(".");}
-	else if ((cell->erroneous) || game->markErrors){printf("*");}
-	else {printf(" ");}
-}
