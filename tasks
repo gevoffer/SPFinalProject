@@ -1,11 +1,15 @@
-1. find block, row and column
-2. parcing user input
-3. all commands that are not smart commands (solve, validate, generate)
-4. smart commands
-5. working with files
+Inbar:
+- Set (update blocks, update moveslist)
+- Other commands
 
-TODO:
-1. list allocation and deletion -> undo commands in the end
+Gev:
+- Implement parser
+- Work with files
+
+Next step:
+figure out which functions are a must before the "smart commands" (solve, validate, generate etc)
+complete them
+and afterwards complete the smart commands
 
 
 חלוקת קבצים:
@@ -16,4 +20,3 @@ TODO:
 קובץ עבודה עם קבצים
 קובץ של solver, validator, generator
 main
-
