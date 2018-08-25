@@ -17,6 +17,7 @@
 
 #define BLOCK_ROW_SIZE 2
 #define BLOCK_COL_SIZE 5
+#define GAME_SIZE BLOCK_ROW_SIZE*BLOCK_COL_SIZE
 
 typedef enum{
 	LOAD_SOLVE,
@@ -49,6 +50,7 @@ typedef struct cell{
 	int col;
 	bool fixed;
 	bool erroneous;
+	int possibleVals[GAME_SIZE + 1];
 } gameCell;
 
 typedef struct block{
@@ -117,5 +119,11 @@ void printRow(int rowNum, gameBoard* board);
 void printCell(gameCell* cell, gameBoard* board);
 
 void printBoard(gameBoard* board);
+
+gameCell* get_cell_from_coordinates(gameBoard* board, int x, int y);
+
+void update_neighbours(gameBoard board, gameCell cell, int prevVal);
+
+bool check_if_possible(gameBoard board, gameCell cell, int prevVal);
 
 #endif /* BACKEND_H_ */

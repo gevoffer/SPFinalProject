@@ -8,6 +8,7 @@
 #include "backend.h"
 
 gameCell* create_cell() {
+	int i;
 	gameCell* cell = (gameCell*) malloc(sizeof(gameCell));
 	if(cell == NULL) {
 		free(cell);
@@ -18,6 +19,9 @@ gameCell* create_cell() {
 	cell->col = -1;
 	cell->fixed = false;
 	cell->erroneous = false;
+	for (i=0 ; i<GAME_SIZE ; i++) {
+		cell->possibleVals[i]=i+1;
+	}
 	return cell;
 }
 
@@ -160,7 +164,7 @@ void destroy_game(Game* game){
 
 void printSepRow() {
 	int i;
-	for (i=0 ; i < 4*BLOCK_ROW_SIZE*BLOCK_COL_SIZE+BLOCK_COL_SIZE+1 ; i++ ) {
+	for (i=0 ; i < 4*GAME_SIZE+BLOCK_COL_SIZE+1 ; i++ ) {
 		printf("-");
 	}
 	printf("\n");
@@ -170,7 +174,7 @@ void printSepRow() {
 void printRow(int rowNum, gameBoard* board) {
 	int i;
 	gameCell* tmpCell;
-	for (i = 0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++){
+	for (i = 0 ; i < GAME_SIZE ; i++){
 		if (i%BLOCK_COL_SIZE==0) {
 			printf("|");
 		}
@@ -194,11 +198,63 @@ void printCell(gameCell* cell, gameBoard* board) {
 //void printBoard(Game* game) {
 void printBoard(gameBoard* board) {
 	int i;
-	for (i=0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++) {
+	for (i=0 ; i < GAME_SIZE ; i++) {
 		if (i%BLOCK_ROW_SIZE==0) {
 			printSepRow();
 		}
 		printRow(i, board);
 	}
 	printSepRow();
+}
+
+gameCell* get_cell_from_coordinates(gameBoard* board, int x, int y){
+	gameCell* cell;
+	cell = board->boardCells[y-1][x-1];
+	return cell;
+}
+
+void update_neighbours(gameBoard board, gameCell cell, int prevVal){
+	int cellVal;
+	int i;
+
+	cellVal = cell->value;
+	if (cellVal == 0) {
+		// check if prevVal is valid for all neighbors
+		for (i = 0 ; i < GAME_SIZE ; i++){
+			if (check_if_possible(board, board->boardCells[cell->row][i], prevVal)) {
+				board->boardCells[cell->row][i]->possibleVals[prevVal] = prevVal;
+			}
+			if (check_if_possible(board, board->boardCells[i][cell->col], prevVal)) {
+				board->boardCells[i][cell->col]->possibleVals[prevVal] = prevVal;
+			}
+			// do the same with the whole block
+		}
+	}
+	else if(cellVal != 0) {
+		// remove cellVal from possible values list of all neighbors
+		for (i = 0 ; i < GAME_SIZE ; i++){
+			board->boardCells[cell->row][i]->possibleVals[cellVal]=0;
+			board->boardCells[i][cell->col]->possibleVals[cellVal]=0;
+			// do the same with the whole block
+		}
+	}
+	return;
+}
+
+bool check_if_possible(gameBoard board, gameCell cell, int prevVal){
+	int i;
+	//compare to all in row- return 0 if error
+	for (i=0 ; i<GAME_SIZE ; i++) {
+		if (board->boardCells[cell->row][i]->value==prevVal) {
+			return 0;
+		}
+	}
+	//compare to all in column- return 0 if error
+	for (i=0 ; i<GAME_SIZE ; i++) {
+		if (board->boardCells[i][cell->col]->value==prevVal) {
+			return 0;
+		}
+	}
+	//TODO- compare to all in block- return 0 if error
+	return true;
 }
