@@ -154,7 +154,7 @@ void printCell(gameCell* cell, gameBoard* board) {
 void printBoard(gameBoard* board) {
 	int i;
 	for (i=0 ; i < BLOCK_ROW_SIZE*BLOCK_COL_SIZE ; i++) {
-		if (i%BLOCK_COL_SIZE==0) {
+		if (i%BLOCK_ROW_SIZE==0) {
 			printSepRow();
 		}
 		printRow(i, board);

@@ -15,8 +15,8 @@
 #include <time.h>
 #include <malloc.h>
 
-#define BLOCK_ROW_SIZE 3
-#define BLOCK_COL_SIZE 3
+#define BLOCK_ROW_SIZE 2
+#define BLOCK_COL_SIZE 5
 
 typedef enum{
 	LOAD_SOLVE,
