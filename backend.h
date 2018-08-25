@@ -96,7 +96,13 @@ void destroy_board(gameBoard* board);
 
 moveListNode* create_node(moveListNode* prevNode, moveListNode* nextNode, int prevValue, int setValue, int row, int col);
 
+void destroy_moveList_forwards(moveListNode* node);
+
+void destroy_moveList_backwards(moveListNode* node);
+
 Game* create_game();
+
+void destroy_game(Game* game);
 
 void printSepRow();
 
