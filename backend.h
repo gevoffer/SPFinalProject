@@ -66,16 +66,13 @@ typedef struct board{
 typedef struct moveListNode{
 	struct moveListNode *nextMove;
 	struct moveListNode *prevMove;
-	int row;
-	int col;
-	int prevValue;
-	int setValue;
-}moveListNode;
+	int moves[]; /*Array of size 4 times the number of moves per node: row, column, original value and set value*/
+} moveNode;
 
 typedef struct game{
 	gameBoard* board;
 	MODE mode;
-	moveListNode* lastMove;
+	struct moveListNode* lastMove;
 	bool markErrors;
 } Game;
 
@@ -95,12 +92,6 @@ gameBoard* create_board();
 gameBoard* copy_board(gameBoard* board);
 
 void destroy_board(gameBoard* board);
-
-moveListNode* create_node(moveListNode* prevNode, moveListNode* nextNode, int prevValue, int setValue, int row, int col);
-
-void destroy_moveList_forwards(moveListNode* node);
-
-void destroy_moveList_backwards(moveListNode* node);
 
 Game* create_game();
 
